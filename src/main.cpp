@@ -71,21 +71,22 @@ void autonomous() {}
 void opcontrol()
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor leftmtr1(11); //PORT 11,left side motor # 1
-	pros::Motor frontLeft(12); //port 12, left side motor #2
-	pros::Motor frontRight(19);//port 19, right side motor #1
-	pros::Motor rightmtr2(20);//port 20, right side motor #2
+	pros::Motor backLeft(11); 		//PORT 11 GOES TO BACK LEFT MOTOR
+	pros::Motor frontLeft(12); 		//PORT 12 GOES TO FRONT LEFT MOTOR
+	pros::Motor frontRight(19);		//PORT 19 GOES TO FRONT RIGHT MOTOR
+	pros::Motor backRight(20);		//PORT 20 GOES TO BACK RIGHT MOTOR
 
 	while (true)
 	{
-		int leftInput = master.get_analog(ANALOG_LEFT_Y) * -1; //inverted here for the sake of making controls consistent
-		int rightInput = master.get_analog(ANALOG_RIGHT_Y);
+		//get controller inputs and store them to variables
+		int leftInput = master.get_analog(ANALOG_LEFT_Y) * -1; 	//yes, its inefficient to invert twice like this
+		int rightInput = master.get_analog(ANALOG_RIGHT_Y); 	//do i care? no and neither will the compiler
 
-		//movement controls
-		leftmtr1.move(leftInput);
-		frontLeft.move(leftInput * -1);
-		frontRight.move(rightInput * -1);
-		rightmtr2.move(rightInput);
+		//driving controls
+		backLeft.move(leftInput);
+		frontLeft.move(leftInput * -1);		//the movement of the front motors is inverted to make all wheels go
+		frontRight.move(rightInput * -1); 	//the same direction instead of just rotating inwards
+		backRight.move(rightInput);
 
 
 		pros::delay(5);
