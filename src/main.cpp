@@ -72,14 +72,20 @@ void opcontrol()
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	pros::Motor leftmtr1(11); //PORT 11,left side motor # 1
-	pros::Motor leftmtr2(12); //port 12, left side motor #2
-	pros::Motor rightmtr1(19);//port 19, right side motor #1
+	pros::Motor frontLeft(12); //port 12, left side motor #2
+	pros::Motor frontRight(19);//port 19, right side motor #1
 	pros::Motor rightmtr2(20);//port 20, right side motor #2
 
 	while (true)
 	{
-		int left = master.get_analog(ANALOG_LEFT_Y);
-		int right = master.get_analog(ANALOG_RIGHT_Y);
+		int leftInput = master.get_analog(ANALOG_LEFT_Y) * -1; //inverted here for the sake of making controls consistent
+		int rightInput = master.get_analog(ANALOG_RIGHT_Y);
+
+		//movement controls
+		leftmtr1.move(leftInput);
+		frontLeft.move(leftInput * -1);
+		frontRight.move(rightInput * -1);
+		rightmtr2.move(rightInput);
 
 
 		pros::delay(5);
