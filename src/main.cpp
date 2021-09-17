@@ -71,11 +71,12 @@ void autonomous() {}
 void opcontrol()
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	//drive motors
 	pros::Motor backLeft(11); 		//PORT 11 GOES TO BACK LEFT MOTOR
 	pros::Motor frontLeft(12); 		//PORT 12 GOES TO FRONT LEFT MOTOR
 	pros::Motor frontRight(19);		//PORT 19 GOES TO FRONT RIGHT MOTOR
 	pros::Motor backRight(20);		//PORT 20 GOES TO BACK RIGHT MOTOR
-
+	//arm motors
 	pros::Motor armMove(1);			//TODO: placeholder port, change to real one
 
 	while (true)
@@ -86,8 +87,8 @@ void opcontrol()
 
 		//driving controls
 		backLeft.move(leftInput);
-		frontLeft.move(leftInput * -1);		//the movement of the front motors is inverted to make all wheels go
-		frontRight.move(rightInput * -1); 	//the same direction instead of just rotating inwards
+		frontLeft.move(leftInput * -1);			//the movement of the front motors is inverted to make all wheels go
+		frontRight.move(rightInput * -1); 		//the same direction instead of just rotating inwards
 		backRight.move(rightInput);
 
 		//arm movement controls
