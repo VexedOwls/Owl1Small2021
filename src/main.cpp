@@ -76,6 +76,8 @@ void opcontrol()
 	pros::Motor frontRight(19);		//PORT 19 GOES TO FRONT RIGHT MOTOR
 	pros::Motor backRight(20);		//PORT 20 GOES TO BACK RIGHT MOTOR
 
+	pros::Motor armMove(1);			//TODO: placeholder port, change to real one
+
 	while (true)
 	{
 		//get controller inputs and store them to variables
@@ -88,6 +90,15 @@ void opcontrol()
 		frontRight.move(rightInput * -1); 	//the same direction instead of just rotating inwards
 		backRight.move(rightInput);
 
+		//arm movement controls
+		if(master.get_digital(DIGITAL_L1))
+		{
+			armMove.move(10);
+		}
+		else if(master.get_digital(DIGITAL_R1))
+		{
+			armMove.move(-10);
+		}
 
 		pros::delay(5);
 	}
