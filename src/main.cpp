@@ -91,13 +91,13 @@ void opcontrol()
 		backRight.move(rightInput);
 
 		//arm movement controls
-		if(master.get_digital(DIGITAL_L1))
+		if(master.get_digital(DIGITAL_L1))		//if user is holding down L1,
 		{
-			armMove.move(10);
+			armMove.move(10);					//move motor +10v
 		}
-		else if(master.get_digital(DIGITAL_R1))
+		else if(master.get_digital(DIGITAL_R1))	//if user is holding R1 and isnt holding L1,
 		{
-			armMove.move(-10);
+			armMove.move(-10);					//move motor -10v
 		}
 
 		pros::delay(5);
