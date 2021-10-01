@@ -77,8 +77,9 @@ void opcontrol()
 	pros::Motor frontRight(19); //PORT 19 GOES TO FRONT RIGHT MOTOR
 	pros::Motor backRight(20);	//PORT 20 GOES TO BACK RIGHT MOTOR
 	//arm
-	pros::Motor armMove(9); //TODO: placeholder port, change to real one
+	pros::Motor armMove(9);
 	pros::Motor backArmMove(8);
+	pros::Motor backArmMove2(7);
 
 	armMove.set_brake_mode(MOTOR_BRAKE_HOLD);
 	backArmMove.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -112,14 +113,17 @@ void opcontrol()
 		if (master.get_digital(DIGITAL_R1)) 	//if user is holding down R1,
 		{
 			backArmMove.move(127); 				//move back arm motor forward
+			backArmMove2.move(127);
 		}
 		else if (master.get_digital(DIGITAL_R2))//if user is holding R2 and isnt holding R1,
 		{
 			backArmMove.move(-127); 			//move back arm motor backward
+			backArmMove2.move(-127);
 		}
 		else									//otherwise,
 		{
 			backArmMove.move(0);				//quit moving the arm
+			backArmMove2.move(0);
 		}
 
 		pros::delay(5);
