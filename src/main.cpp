@@ -98,35 +98,35 @@ void opcontrol()
 		backRight.move(rightInput);
 
 		//arm movement controls
-		if (master.get_digital(DIGITAL_L1)) 	//if user is holding down L1,
+		if (master.get_digital(DIGITAL_R1)) //if user is holding down L1,
 		{
-			armMove.move(127); 					//move front arm motor forward
+			armMove.move(-127); //move front arm motor forward
 			armMove2.move(127);
 		}
-		else if (master.get_digital(DIGITAL_L2))//if user is holding L2 and isnt holding L1,
+		else if (master.get_digital(DIGITAL_R2)) //if user is holding L2 and isnt holding L1,
 		{
-			armMove.move(-127); 				//move front arm motor backward
+			armMove.move(127); //move front arm motor backward
 			armMove2.move(-127);
 		}
-		else									//otherwise,
+		else //otherwise,
 		{
-			armMove.move(0);					//quit moving the arm
+			armMove.move(0); //quit moving the arm
 			armMove2.move(0);
 		}
 
-		if (master.get_digital(DIGITAL_R1)) 	//if user is holding down R1,
+		if (master.get_digital(DIGITAL_L1)) //if user is holding down R1,
 		{
-			backArmMove.move(127); 				//move back arm motor forward
+			backArmMove.move(-127); //move back arm motor forward
 			backArmMove2.move(127);
 		}
-		else if (master.get_digital(DIGITAL_R2))//if user is holding R2 and isnt holding R1,
+		else if (master.get_digital(DIGITAL_L2)) //if user is holding R2 and isnt holding R1,
 		{
-			backArmMove.move(-127); 			//move back arm motor backward
+			backArmMove.move(127); //move back arm motor backward
 			backArmMove2.move(-127);
 		}
-		else									//otherwise,
+		else //otherwise,
 		{
-			backArmMove.move(0);				//quit moving the arm
+			backArmMove.move(0); //quit moving the arm
 			backArmMove2.move(0);
 		}
 
