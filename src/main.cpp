@@ -83,7 +83,10 @@ void opcontrol()
 	pros::Motor backArmMove2(10);
 
 	armMove.set_brake_mode(MOTOR_BRAKE_HOLD);
+	armMove2.set_brake_mode(MOTOR_BRAKE_HOLD);
 	backArmMove.set_brake_mode(MOTOR_BRAKE_HOLD);
+	backArmMove2.set_brake_mode(MOTOR_BRAKE_HOLD);
+
 
 	while (true)
 	{
@@ -130,6 +133,6 @@ void opcontrol()
 			backArmMove2.move(0);
 		}
 
-		pros::delay(5);
+		pros::delay(2);
 	}
 }
