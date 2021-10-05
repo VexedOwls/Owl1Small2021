@@ -19,7 +19,7 @@ void on_center_button()
 void initialize()
 {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::lcd::set_text(1, "owl 1 fifteen inch woohoo");
 
 	pros::lcd::register_btn1_cb(on_center_button);
 }
@@ -78,8 +78,9 @@ void opcontrol()
 	pros::Motor backRight(20);	//PORT 20 GOES TO BACK RIGHT MOTOR
 	//arm
 	pros::Motor armMove(9);
-	pros::Motor backArmMove(8);
-	pros::Motor backArmMove2(7);
+	pros::Motor armMove2(2);
+	pros::Motor backArmMove(1);
+	pros::Motor backArmMove2(10);
 
 	armMove.set_brake_mode(MOTOR_BRAKE_HOLD);
 	backArmMove.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -100,14 +101,17 @@ void opcontrol()
 		if (master.get_digital(DIGITAL_L1)) 	//if user is holding down L1,
 		{
 			armMove.move(127); 					//move front arm motor forward
+			armMove2.move(127);
 		}
 		else if (master.get_digital(DIGITAL_L2))//if user is holding L2 and isnt holding L1,
 		{
 			armMove.move(-127); 				//move front arm motor backward
+			armMove2.move(-127);
 		}
 		else									//otherwise,
 		{
 			armMove.move(0);					//quit moving the arm
+			armMove2.move(0);
 		}
 
 		if (master.get_digital(DIGITAL_R1)) 	//if user is holding down R1,
