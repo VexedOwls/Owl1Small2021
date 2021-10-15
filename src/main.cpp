@@ -60,7 +60,7 @@ void autonomous()
 {
 	std::shared_ptr<ChassisController> chassis =
 		ChassisControllerBuilder()
-			.withMotors(11, -12, -19, 20)
+			.withMotors(-11, 12, -19, 20)
 			// Green gearset, 4 in wheel diam, 11.5 in wheel track
 			.withDimensions(AbstractMotor::gearset::green, {{3.25_in, 10_in}, imev5GreenTPR})
 			.build();
