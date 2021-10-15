@@ -1,5 +1,8 @@
 #include "main.h"
-
+#include "okapi/api/chassis/controller/chassisControllerIntegrated.hpp"
+#include "okapi/impl/chassis/controller/chassisControllerBuilder.hpp"
+using namespace okapi;
+using okapi::ChassisControllerIntegrated;
 /**
  * A callback function for LLEMU's center button.
  *
@@ -53,7 +56,16 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous()
+{
+	std::shared_ptr<ChassisController> chassis =
+		ChassisControllerBuilder()
+			.withMotors(11, -12, -19, 20)
+			// Green gearset, 4 in wheel diam, 11.5 in wheel track
+			.withDimensions(AbstractMotor::gearset::green, {{3.25_in, 10_in}, imev5GreenTPR})
+			.build();
+	chassis->moveDistance(1_m);
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -71,7 +83,7 @@ void autonomous() {}
 void opcontrol()
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	//drive motors
+	//drive motors, REVERSE ALL FRONT MOTORS
 	pros::Motor backLeft(11);	//PORT 11 GOES TO BACK LEFT MOTOR
 	pros::Motor frontLeft(12);	//PORT 12 GOES TO FRONT LEFT MOTOR
 	pros::Motor frontRight(19); //PORT 19 GOES TO FRONT RIGHT MOTOR
@@ -86,7 +98,6 @@ void opcontrol()
 	armMove2.set_brake_mode(MOTOR_BRAKE_HOLD);
 	backArmMove.set_brake_mode(MOTOR_BRAKE_HOLD);
 	backArmMove2.set_brake_mode(MOTOR_BRAKE_HOLD);
-
 
 	while (true)
 	{
@@ -131,6 +142,12 @@ void opcontrol()
 		{
 			backArmMove.move(0); //quit moving the arm
 			backArmMove2.move(0);
+		}
+
+		//button controls
+		if(master.get_digital(DIGITAL_A))
+		{
+			autonomous();
 		}
 
 		pros::delay(2);
