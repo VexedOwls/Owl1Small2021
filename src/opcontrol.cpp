@@ -19,8 +19,11 @@ void opcontrol()
 	//drive motors, REVERSE ALL FRONT MOTORS
 	pros::Motor backLeft(11);	//PORT 11 GOES TO BACK LEFT MOTOR
 	pros::Motor frontLeft(12);	//PORT 12 GOES TO FRONT LEFT MOTOR
+	pros::Motor frontmostLeft(13);
+	pros::Motor frontmostRight(18);
 	pros::Motor frontRight(19); //PORT 19 GOES TO FRONT RIGHT MOTOR
 	pros::Motor backRight(20);	//PORT 20 GOES TO BACK RIGHT MOTOR
+
 	//arm
 	pros::Motor armMove(9);
 	pros::Motor armMove2(2);
@@ -32,6 +35,10 @@ void opcontrol()
 	backArmMove.set_brake_mode(MOTOR_BRAKE_HOLD);
 	backArmMove2.set_brake_mode(MOTOR_BRAKE_HOLD);
 
+	bool state = 0;
+	pros::ADIDigitalOut actuator(1, state);
+
+
 	while (true)
 	{
 		//get controller inputs and store them to variables
@@ -40,9 +47,23 @@ void opcontrol()
 
 		//driving controls
 		backLeft.move(leftInput);
-		frontLeft.move(leftInput * -1);	  //the movement of the front motors is inverted to make all wheels go
+		frontLeft.move(leftInput * -1);
+		frontmostLeft.move(leftInput);	  //the movement of the front motors is inverted to make all wheels go
+		frontmostRight.move(rightInput);  //the movement of the front motors is inverted to make all wheels go
 		frontRight.move(rightInput * -1); //the same direction instead of just rotating inwards
 		backRight.move(rightInput);
+
+		//claw control
+		if (state=0 && master.get_digital(DIGITAL_A))
+		{
+			state = 1;
+			actuator.set_value(state);
+		}
+		else if (state=1 && master.get_digital(DIGITAL_A))
+		{
+			state = 0;
+			actuator.set_value(state);
+		}
 
 		//arm movement controls
 		if (master.get_digital(DIGITAL_R1)) //if user is holding down L1,
@@ -78,10 +99,10 @@ void opcontrol()
 		}
 
 		//button controls
-		if(master.get_digital(DIGITAL_A))
-		{
-			autonomous();
-		}
+		//if(master.get_digital(DIGITAL_A))
+		//{
+		//	autonomous();
+		//}
 
 		pros::delay(2);
 	}

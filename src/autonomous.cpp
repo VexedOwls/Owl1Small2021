@@ -14,8 +14,8 @@ void autonomous() //-12 -19
 	std::shared_ptr<ChassisController> chassis =
 		ChassisControllerBuilder()
 			.withMotors(
-				{12,-11},
-				{-19,20}
+				{12,13,-11},
+				{-19,18,20}
 			)
 			.withMaxVelocity(100.0)
 			.withDimensions({AbstractMotor::gearset::green, (3.0/5.0)}, {{3.25_in, 10_in}, imev5GreenTPR})
