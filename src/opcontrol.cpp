@@ -36,6 +36,8 @@ void opcontrol()
 	backArmMove2.set_brake_mode(MOTOR_BRAKE_HOLD);
 
 	bool state = 0;
+	bool doClaw = false;
+	bool latchA = false;
 	pros::ADIDigitalOut actuator(1, state);
 
 
@@ -54,12 +56,22 @@ void opcontrol()
 		backRight.move(rightInput);
 
 		//claw control
-		if (state=0 && master.get_digital(DIGITAL_A))
+		if (master.get_digital(DIGITAL_A)) {
+			if(!latchA){ //flip the toggle one time and set the latch
+			doClaw = !doClaw;
+			latchA = true;
+			}
+			} else {
+			//Once the BumperA is released then then release the latch too
+			latchA = false;
+		}
+
+		if (doClaw)
 		{
 			state = 1;
 			actuator.set_value(state);
 		}
-		else if (state=1 && master.get_digital(DIGITAL_A))
+		else if (!doClaw)
 		{
 			state = 0;
 			actuator.set_value(state);
