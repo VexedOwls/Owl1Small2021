@@ -22,7 +22,7 @@ void on_center_button()
 void initialize()
 {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "owl 1 fifteen inch woohoo");
+	pros::lcd::set_text(1, "wireless upload");
 
 	pros::lcd::register_btn1_cb(on_center_button);
 }

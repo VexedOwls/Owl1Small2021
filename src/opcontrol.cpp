@@ -50,9 +50,9 @@ void opcontrol()
 		//driving controls
 		backLeft.move(leftInput);
 		frontLeft.move(leftInput * -1);
-		frontmostLeft.move(leftInput);	  //the movement of the front motors is inverted to make all wheels go
-		frontmostRight.move(rightInput);  //the movement of the front motors is inverted to make all wheels go
-		frontRight.move(rightInput * -1); //the same direction instead of just rotating inwards
+		frontmostLeft.move(leftInput);	  
+		frontmostRight.move(rightInput);  
+		frontRight.move(rightInput * -1);
 		backRight.move(rightInput);
 
 		//claw control
@@ -111,10 +111,10 @@ void opcontrol()
 		}
 
 		//button controls
-		//if(master.get_digital(DIGITAL_A))
-		//{
-		//	autonomous();
-		//}
+		if(master.get_digital(DIGITAL_B))
+		{
+			autonomous();
+		}
 
 		pros::delay(2);
 	}
