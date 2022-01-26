@@ -18,10 +18,10 @@ void opcontrol()
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	//drive motors, REVERSE ALL FRONT MOTORS
 	pros::Motor backLeft(11);	//PORT 11 GOES TO BACK LEFT MOTOR
-	pros::Motor frontLeft(12);	//PORT 12 GOES TO FRONT LEFT MOTOR
+	pros::Motor frontLeft(12, true);	//PORT 12 GOES TO FRONT LEFT MOTOR
 	pros::Motor frontmostLeft(13);
 	pros::Motor frontmostRight(18);
-	pros::Motor frontRight(19); //PORT 19 GOES TO FRONT RIGHT MOTOR
+	pros::Motor frontRight(19, true); //PORT 19 GOES TO FRONT RIGHT MOTOR
 	pros::Motor backRight(20);	//PORT 20 GOES TO BACK RIGHT MOTOR
 
 	//arm
@@ -49,10 +49,10 @@ void opcontrol()
 
 		//driving controls
 		backLeft.move(leftInput);
-		frontLeft.move(leftInput * -1);
+		frontLeft.move(leftInput);
 		frontmostLeft.move(leftInput);	  
 		frontmostRight.move(rightInput);  
-		frontRight.move(rightInput * -1);
+		frontRight.move(rightInput);
 		backRight.move(rightInput);
 
 		//claw control
