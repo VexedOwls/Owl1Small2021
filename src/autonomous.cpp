@@ -20,5 +20,7 @@ void autonomous()
 
 void translate(int units, int voltage)
 {
-	
+	//reset motor encoders
+	//drive forwards
+	backLeft.tare_position();
 }
