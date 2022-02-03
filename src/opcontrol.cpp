@@ -1,4 +1,84 @@
 #include "main.h"
+#include "robotBase.h"
+
+using namespace pros;
+
+
+void opcontrol()
+{
+	Motor backRight(20, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+	Motor midRight(19, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+	Motor frontRight(18, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+	Motor backLeft(11, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+	Motor midLeft(12, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+	Motor frontLeft(13, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+
+	RobotBase base(&backRight, &midRight, &frontRight, &backLeft, &midLeft, &frontLeft);
+
+	pros::Motor armMove(9);
+	pros::Motor armMove2(2);
+	pros::Motor backArmMove(1);
+	pros::Motor backArmMove2(10);
+	armMove.set_brake_mode(MOTOR_BRAKE_HOLD);
+	armMove2.set_brake_mode(MOTOR_BRAKE_HOLD);
+	backArmMove.set_brake_mode(MOTOR_BRAKE_HOLD);
+	backArmMove2.set_brake_mode(MOTOR_BRAKE_HOLD);
+
+	pros::ADIDigitalOut actuator(1, 1);
+	Imu imu(16);
+
+	delay(5*1000);
+
+	base.moveGyro(-57 _INCHES, &imu, true);
+
+	actuator.set_value(0);
+
+	base.moveGyro(41 _INCHES, &imu, true);
+
+	actuator.set_value(1);
+	armMove.move(127);
+	armMove2.move(-127);
+	delay(200);
+	armMove.move(0);
+	armMove2.move(0);
+
+	base.moveGyro(18 _INCHES, &imu);
+	base.turnGyro(31, &imu, true);
+	base.moveGyro(-45 _INCHES, &imu);
+
+	actuator.set_value(0);
+
+	base.moveGyro(35 _INCHES, &imu);	// !!!!!! 35
+
+	actuator.set_value(1);
+	armMove.move(127);
+	armMove2.move(-127);
+	delay(200);
+	armMove.move(0);
+	armMove2.move(0);
+
+	base.moveGyro(16 _INCHES, &imu);
+	base.turnGyro(-134, &imu, true);
+
+	backArmMove.move(127);
+	backArmMove2.move(-127);
+	delay(1200);
+	backArmMove.move(0);
+	backArmMove2.move(0);
+
+	base.moveGyro(22 _INCHES, &imu);
+
+	backArmMove.move(-127);
+	backArmMove2.move(127);
+	delay(600);
+	backArmMove.move(0);
+	backArmMove2.move(0);
+
+	base.moveGyro(-27 _INCHES, &imu);
+}
+
+
+
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -13,7 +93,7 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol()
+void opcontrol_test()
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	//drive motors, REVERSE ALL FRONT MOTORS
@@ -50,8 +130,8 @@ void opcontrol()
 		//driving controls
 		backLeft.move(leftInput);
 		frontLeft.move(leftInput);
-		frontmostLeft.move(leftInput);	  
-		frontmostRight.move(rightInput);  
+		frontmostLeft.move(leftInput);
+		frontmostRight.move(rightInput);
 		frontRight.move(rightInput);
 		backRight.move(rightInput);
 

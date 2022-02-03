@@ -20,7 +20,7 @@ void autonomous()
 void translate(int units, int voltage)
 {
 	//reset motor encoders
-	resetDriveEncoders();
+	//resetDriveEncoders();
 	//drive forwards
 	while (frontLeft.get_position() < units)
 	{
