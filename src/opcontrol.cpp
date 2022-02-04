@@ -1,5 +1,5 @@
 #include "main.h"
-#include "robotBase.h"
+#include "motors.h"
 
 using namespace pros;
 
@@ -20,16 +20,11 @@ using namespace pros;
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
 void opcontrol()
 {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	//drive motors, REVERSE ALL FRONT MOTORS
-	pros::Motor backLeft(11);	//PORT 11 GOES TO BACK LEFT MOTOR
-	pros::Motor frontLeft(12, true);	//PORT 12 GOES TO FRONT LEFT MOTOR
-	pros::Motor frontmostLeft(13);
-	pros::Motor frontmostRight(18);
-	pros::Motor frontRight(19, true); //PORT 19 GOES TO FRONT RIGHT MOTOR
-	pros::Motor backRight(20);	//PORT 20 GOES TO BACK RIGHT MOTOR
 
 	//arm
 	pros::Motor armMove(9);
@@ -52,15 +47,15 @@ void opcontrol()
 	{
 		//get controller inputs and store them to variables
 		int leftInput = master.get_analog(ANALOG_LEFT_Y) * -1; //yes, its inefficient to invert twice like this
-		int rightInput = master.get_analog(ANALOG_RIGHT_Y);	   //do i care? no and neither will the compiler
+		int rightInput = master.get_analog(ANALOG_RIGHT_Y) * -1;	   //do i care? no and neither will the compiler
 
 		//driving controls
-		backLeft.move(leftInput);
-		frontLeft.move(leftInput);
-		frontmostLeft.move(leftInput);
-		frontmostRight.move(rightInput);
-		frontRight.move(rightInput);
-		backRight.move(rightInput);
+		backLeft->move(leftInput);
+		frontLeft->move(leftInput);
+		midLeft->move(leftInput);
+		frontRight->move(rightInput);
+		midRight->move(rightInput);
+		backRight->move(rightInput);
 
 
 		if (master.get_digital(DIGITAL_Y) && !competition::is_connected())

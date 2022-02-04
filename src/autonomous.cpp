@@ -1,6 +1,7 @@
 #include "main.h"
 #include "autoSelect/selection.h"
 #include "robotBase.h"
+#include "motors.h"
 
 using namespace pros;
 
@@ -17,15 +18,8 @@ using namespace pros;
 void autonomous()
 {
 	Imu imu(16);
-	
-	Motor backRight(20, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
-	Motor midRight(19, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
-	Motor frontRight(18, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
-	Motor backLeft(11, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
-	Motor midLeft(12, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
-	Motor frontLeft(13, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 
-	RobotBase base(&backRight, &midRight, &frontRight, &backLeft, &midLeft, &frontLeft);
+	RobotBase base(backRight, midRight, frontRight, backLeft, midLeft, frontLeft);
 
 	Motor armMove(9);
 	Motor armMove2(2);
@@ -48,7 +42,7 @@ void autonomous()
 
 	if (selector::auton == skills)
 	{
-		
+
 	}
 
 
@@ -85,7 +79,7 @@ void autonomous()
 		armMove.move(0);
 		armMove2.move(0);
 
-		base.moveGyro(16 _INCHES, &imu);
+		base.moveGyro(15 _INCHES, &imu);
 		base.turnGyro(-134, &imu, true);
 
 		backArmMove.move(127);
