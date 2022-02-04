@@ -1,8 +1,15 @@
 #include "main.h"
 #include "okapi/api/chassis/controller/chassisControllerIntegrated.hpp"
 #include "okapi/impl/chassis/controller/chassisControllerBuilder.hpp"
+#include "autoSelect/selection.h"
 using namespace okapi;
 using okapi::ChassisControllerIntegrated;
+
+
+
+
+
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -21,10 +28,20 @@ void on_center_button()
  */
 void initialize()
 {
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "wireless upload");
+	selector::init();
 
-	pros::lcd::register_btn1_cb(on_center_button);
+	// pros::Controller master (pros::E_CONTROLLER_MASTER);
+	// master.print(0,0,"IMU Calibrating...");
+
+
+	// master.clear();
+	// master.print(0,0,"Done!");
+	// master.rumble("-");
+
+
+	// // pros::lcd::initialize();
+	// // pros::lcd::set_text(1, "wireless upload");
+	// // pros::lcd::register_btn1_cb(on_center_button);
 }
 
 /**
