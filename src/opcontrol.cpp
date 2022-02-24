@@ -45,21 +45,31 @@ void opcontrol()
 
 	while (true)
 	{
-		//get controller inputs and store them to variables
-		int leftInput = master.get_analog(ANALOG_LEFT_Y) * -1; //yes, its inefficient to invert twice like this
-		int rightInput = master.get_analog(ANALOG_RIGHT_Y) * -1;	   //do i care? no and neither will the compiler
-
-		//driving controls
+/*
+		int leftInput = master.get_analog(ANALOG_LEFT_Y) * -1;
+		int rightInput = master.get_analog(ANALOG_RIGHT_Y) * -1;
 		backLeft->move(leftInput);
 		frontLeft->move(leftInput);
 		midLeft->move(leftInput);
 		frontRight->move(rightInput);
 		midRight->move(rightInput);
 		backRight->move(rightInput);
+		// TANK CONTROL
+*/
+
+		int forback = master.get_analog(ANALOG_LEFT_X) * -1 * 0.67;
+		int turning = master.get_analog(ANALOG_LEFT_Y) * -1;
+		backLeft->move(forback + turning);
+		frontLeft->move(forback + turning);
+		midLeft->move(forback + turning);
+		frontRight->move(-forback + turning);
+		midRight->move(-forback + turning);
+		backRight->move(-forback + turning);
+		// ARCADE CONTROL
 
 
-		if (master.get_digital(DIGITAL_Y) && !competition::is_connected())
-		{  autonomous();  }
+
+
 
 
 		//claw control
@@ -117,11 +127,6 @@ void opcontrol()
 			backArmMove2.move(0);
 		}
 
-		//button controls
-		if(master.get_digital(DIGITAL_B))
-		{
-			autonomous();
-		}
 
 		pros::delay(2);
 	}
